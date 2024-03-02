@@ -3,7 +3,7 @@ import smtplib
 from ftplib import FTP
 
 
-def update_receiver_and_send_email():
+def update_receiver_and_send_email(entry_receiver):
     try:
         input_file = open("SentEmailToUser.txt", "r")
         lines = input_file.readlines()
@@ -25,16 +25,20 @@ def update_receiver_and_send_email():
         print("Read successful")
 
         try:
-            server = smtplib.SMTP('smtp.gmail.com', 587)
+            server = smtplib.SMTP("smtp.gmail.com", 587)
             server.starttls()
             print("Connect successful")
             try:
                 server.login(account, password)
-                msg = "Subject: Verify Identity\n\n" + "Please click the following link to verify your identity :\n" + "http://00.00.00.00/"
+                msg = (
+                    "Subject: Verify Identity\n\n"
+                    + "Please click the following link to verify your identity :\n"
+                    + "http://127.0.0.1/"
+                )
                 server.sendmail(account, receivers, msg)
                 print("Send Mail successful")
-                #show_confirmation_label()
-                #print(receivers)
+                # show_confirmation_label()
+                # print(receivers)
             except:
                 print("Incorrect")
             finally:
@@ -44,29 +48,28 @@ def update_receiver_and_send_email():
     except Exception as e:
         print("Data in file:", str(e))
 
-def show_confirmation_label():
+
+def show_confirmation_label(root):
     confirmation_label = Label(root, text="Hi")
     confirmation_label.pack(pady=10)
-    
-
-root = Tk()
-root.geometry("300x200")
-root.title("Email Verification")
-
-label_receiver = Label(root, text="enter your username :")
-label_receiver.pack()
-
-entry_receiver = Entry(root, width=30)
-entry_receiver.pack()
-
-btn_click = Button(root, text="Click", command=update_receiver_and_send_email)
-btn_click.pack(pady=10)
-
-ftp = FTP('00.00.00.00') # IP server
-ftp.login(user='Fam', passwd='Fam')
-#ftp.retrlines('LIST')
-
-root.mainloop()
 
 
+def NewUser_GUI():
+    root = Tk()
+    root.geometry("300x200")
+    root.title("Email Verification")
 
+    label_receiver = Label(root, text="enter your username :")
+    label_receiver.pack()
+
+    entry_receiver = Entry(root, width=30)
+    entry_receiver.pack()
+
+    btn_click = Button(
+        root,
+        text="Click",
+        command=lambda: update_receiver_and_send_email(entry_receiver),
+    )
+    btn_click.pack(pady=10)
+
+    root.mainloop()

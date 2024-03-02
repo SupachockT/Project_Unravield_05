@@ -1,1 +1,0 @@
-sender_mail;pw_sender_mail;recv_mail
