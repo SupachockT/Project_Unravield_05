@@ -1,7 +1,6 @@
 import sys
 
 sys.path.append("..\\..\\Public\\")
-sys.path.append("..\\..\\FTP_Server\\")
 
 import JSON_Function as j
 from NFC_Reader import NFC_Reader
@@ -30,11 +29,7 @@ if __name__ == "__main__":
         # ไปที่หน้าเติมเงินเข้าบัตร
         Open_TopUp(nisitData=all_nisit_data, uid=uid)
     else:
-        NewUser_GUI()
-        new_uid_data = {"email": "example@example.com", "isVerify": True, "money": 0}
-        all_nisit_data[uid] = new_uid_data
-        # อัพเดทข้อมูลกลับลงไปใน json file
-        j.update_data("nisit.json", all_nisit_data)
+        NewUser_GUI(uid, all_nisit_data, ftp_client)
 
     # อัปโหลดเข้า json file กลับสู่ FTP Server
     ftp_client.upload_file("nisit.json")

@@ -1,17 +1,17 @@
 import json
 
 
-def load_data(jsonFile):
+def load_data(file_path):
     try:
-        with open(jsonFile, "r") as file:
-            data = json.load(file)
-            return data
+        with open(file_path, "r") as file:
+            return json.load(file)
     except FileNotFoundError:
-        print("File not found.")
-        return None
-    except json.JSONDecodeError:
-        print("Error decoding JSON data.")
-        return None
+        print(f"File '{file_path}' not found.")
+    except json.JSONDecodeError as e:
+        print(f"Error decoding JSON from '{file_path}': {e}")
+    except Exception as e:
+        print(f"An error occurred while loading data from '{file_path}': {e}")
+    return None
 
 
 def update_data(json_file, data):

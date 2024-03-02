@@ -2,7 +2,6 @@ import sys
 import tkinter as tk
 
 sys.path.append("..\\..\\Public\\")
-sys.path.append("..\\..\\FTP_Server\\")
 
 
 def get_data_by_uid(data, uid):
