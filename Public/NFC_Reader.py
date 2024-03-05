@@ -56,7 +56,6 @@ class NFC_Reader:
             raise Exception("Failed to send command:", SCardGetErrorMessage(hresult))
         return response, toHexString(response, format=0)
 
-
 """
 #Example of usage
 if __name__ == "__main__":
