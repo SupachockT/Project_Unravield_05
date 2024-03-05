@@ -6,7 +6,7 @@ import json
 
 root = Tk()
 root.geometry("1500x750+10+10")
-root.title("ร้านอาหารคณะวิศวกรรมศาสตร์ ศรีราชา")
+root.title("ซุ้ม KU คณะวิศวกรรมศาสตร์ ศรีราชา")
 
 Tops = Frame(root,width=1500,height=50,bg="powder blue",relief=SUNKEN)
 Tops.pack(side=TOP)
