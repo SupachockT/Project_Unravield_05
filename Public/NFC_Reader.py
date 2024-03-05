@@ -57,6 +57,8 @@ class NFC_Reader:
         return response, toHexString(response, format=0)
 
 
+"""
+#Example of usage
 if __name__ == "__main__":
     reader = NFC_Reader()
     # เรียกใช้ read_uid() เพื่ออ่านค่า uid
@@ -65,3 +67,4 @@ if __name__ == "__main__":
         print("UID:", uid)
     else:
         print("No card detected.")
+"""
