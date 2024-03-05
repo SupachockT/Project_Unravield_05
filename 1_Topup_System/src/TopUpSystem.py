@@ -13,7 +13,7 @@ from NewUserGUI import NewUser_GUI
 def is_uid_exists(nisit_data, uid):
     return uid in nisit_data
 
-uid = "11 22 33 42"  # UID ปลอมขึ้นมา
+uid = "11 22 33 49"  # UID ปลอมขึ้นมา
 fileName = "nisit.json"
 
 if __name__ == "__main__":
