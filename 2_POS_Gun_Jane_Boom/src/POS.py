@@ -1,6 +1,6 @@
 import json
 import sys
-sys.path.append('C:\Users\yuuki\Documents\GitHub\Project_Unravield_05\Public')
+sys.path.append("..\\..\\Public\\")
 
 #import Public.NFC_Reader
 import NFC_Reader
