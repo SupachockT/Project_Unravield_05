@@ -52,13 +52,32 @@ class POSSystem:
             return False
 
     def generate_receipt(self, nfc_data):
-        # สร้างใบเสร็จหรือยืนยันการชำระเงิน
-        print(f"สร้างใบเสร็จสำหรับรายการชำระเงินของ {nfc_data['customer_name']}")
+    # Extract customer information from NFC data
+        customer_name = nfc_data.get('customer_name', 'Unknown Customer')
+        transaction_details = {
+        'total_amount': self.total,
+        'paid_amount': self.money_amount,
+        'change': self.money_amount - self.total
+    }
+        # Generate receipt content
+        receipt_content = f"--- Receipt ---\n"
+        receipt_content += f"Customer: {customer_name}\n"
+        receipt_content += f"Total Amount: {transaction_details['total_amount']} Baht\n"
+        receipt_content += f"Paid Amount: {transaction_details['paid_amount']} Baht\n"
+        receipt_content += f"Change: {transaction_details['change']} Baht\n"
+        receipt_content += f"Thank you for your purchase!"
 
-    def calculate_and_store_points(self):
-        # คำนวณและเก็บ points ตามสัดส่วนที่กำหนด
-        self.points += self.money_amount // 100 * POINTS_PER_100_BAHT
-        print(f"ท่านได้รับ {self.points} คะแนน")
+        print(receipt_content)
+
+def calculate_and_store_points(self):
+    # Calculate points based on the money spent
+    earned_points = self.money_amount // 100 * POINTS_PER_100_BAHT
+    self.points += earned_points
+    
+    # Print the earned points and total points
+    print(f"You have earned {earned_points} points.")
+    print(f"Total points: {self.points}")
+
 
 
 # สร้างอ็อบเจ็ต POS
