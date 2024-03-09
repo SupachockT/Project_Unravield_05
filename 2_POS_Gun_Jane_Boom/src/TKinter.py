@@ -9,8 +9,8 @@ from tkinter import *
 from tkinter import messagebox
 import random
 import time
-import json
 from NFC_Reader import NFC_Reader
+
 fileName = "nisit.json"
 ftp_client = FTPClient("127.0.0.1", user="admin", passwd="")
 ftp_client.download_file(fileName)
@@ -32,31 +32,25 @@ f2.pack(side=RIGHT)
 text_Input = StringVar()
 operator = ""
 
-
 # Money Input
 money_var = StringVar()
 money_label = Label(f1, font=("TH Sarabun New", 20, "bold"), text="Enter Money:", fg="black", bd=10, anchor="w")
 money_label.grid(row=0, column=0)
-money_entry = Entry(f1, font=("TH Sarabun New", 20, "bold"), textvariable=money_var, bd=10, insertwidth=4, bg="powder blue",
-                    justify="right")
+money_entry = Entry(f1, font=("TH Sarabun New", 20, "bold"), textvariable=money_var, bd=10, insertwidth=4, bg="powder blue",justify="right")
 money_entry.grid(row=0, column=1)
 
 # Customer Display
 customer_display_var = StringVar()
-customer_display_label = Label(f1, font=("TH Sarabun New", 20, "bold"), text="Customer Display:", fg="black", bd=10,
-                               anchor="w")
+customer_display_label = Label(f1, font=("TH Sarabun New", 20, "bold"), text="Customer Display:", fg="black", bd=10, anchor="w")
 customer_display_label.grid(row=1, column=0)
-customer_display = Entry(f1, font=("TH Sarabun New", 20, "bold"), textvariable=customer_display_var, bd=10,
-                         insertwidth=4, bg="powder blue", justify="right", state='readonly')
+customer_display = Entry(f1, font=("TH Sarabun New", 20, "bold"), textvariable=customer_display_var, bd=10, insertwidth=4, bg="powder blue", justify="right", state='readonly')
 customer_display.grid(row=1, column=1)
 
 # Card UID Display
 card_uid_var = StringVar()
-card_uid_label = Label(f1, font=("TH Sarabun New", 20, "bold"), text="Card UID:", fg="black", bd=10,
-                               anchor="w")
+card_uid_label = Label(f1, font=("TH Sarabun New", 20, "bold"), text="Card UID:", fg="black", bd=10, anchor="w")
 card_uid_label.grid(row=2, column=0)
-card_uid_display = Entry(f1, font=("TH Sarabun New", 20, "bold"), textvariable=card_uid_var, bd=10,
-                         insertwidth=4, bg="powder blue", justify="right", state='readonly')
+card_uid_display = Entry(f1, font=("TH Sarabun New", 20, "bold"), textvariable=card_uid_var, bd=10, insertwidth=4, bg="powder blue", justify="right", state='readonly')
 card_uid_display.grid(row=2, column=1)
 
 def btnClick(num):
@@ -75,8 +69,7 @@ def btnEqual():
     operator = ""
 
 localtime = time.asctime(time.localtime(time.time()))
-_ = Label(Tops, font=("TH Sarabun New", 50, "bold"),
-          text="ซุ้ม KU คณะวิศวกรรมศาสตร์ ศรีราชา", fg="Blue", bd=10, anchor="w")
+_ = Label(Tops, font=("TH Sarabun New", 50, "bold"),text="ซุ้ม KU คณะวิศวกรรมศาสตร์ ศรีราชา", fg="Blue", bd=10, anchor="w")
 _.grid(row=0, column=0)
 
 _ = Label(Tops, font=("TH Sarabun New", 20, "bold"), text=localtime, fg="Blue", bd=10, anchor="w").grid(row=1, column=0)

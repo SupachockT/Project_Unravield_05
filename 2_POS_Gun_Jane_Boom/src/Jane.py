@@ -78,8 +78,6 @@ def calculate_and_store_points(self):
     print(f"You have earned {earned_points} points.")
     print(f"Total points: {self.points}")
 
-
-
 # สร้างอ็อบเจ็ต POS
 pos_system = POSSystem()
 
