@@ -13,7 +13,7 @@ class POSSystem:
             uid = self.nfc_reader.read_uid()
         except:
             return None
-        else
+        else:
             return uid
            
     def process_payment(self):
