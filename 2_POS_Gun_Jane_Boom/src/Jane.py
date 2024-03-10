@@ -38,7 +38,7 @@ class POSSystem:
 
         except Exception as e:
             print(f"เกิดข้อผิดพลาด: {str(e)}")
-        
+
         return receipt, points
 
     def validate_payment_data(self, nfc_data):
@@ -57,21 +57,20 @@ class POSSystem:
             print("เงินในบัตรไม่เพียงพอ")
             return False
 
-    def generate_receipt(self, uid, total, money, points):
-        customer_name = uid
+    def generate_receipt(self, uid, total, nisit_code, fname, lname, timedate):
+        customer_name = fname + " " + lname + " " + nisit_code
         transaction_details = {
             "total_amount": total,
-            "paid_amount": money,
-            "points": points,
         }
+        receive_points = self.calculate_points(total)
         # Generate receipt content
         receipt_content = f"--- Receipt ---\n"
         receipt_content += f"Customer: {customer_name}\n"
         receipt_content += f"Total Amount: {transaction_details['total_amount']} Baht\n"
-        receipt_content += f"Paid Amount: {transaction_details['paid_amount']} Baht\n"
-        receipt_content += f"points: {transaction_details['points']} Baht\n"
+        receipt_content += f"received points: {receive_points} \n"
+        receipt_content += f"time stamps: {timedate} \n"
         receipt_content += f"Thank you for your purchase!"
-        
+
         return receipt_content
 
     def set_money_and_points(self, nfc_data):

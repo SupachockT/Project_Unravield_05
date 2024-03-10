@@ -1,5 +1,6 @@
 import sys
 import os
+import datetime
 
 sys.path.append("..\\..\\Public\\")
 import JSON_Function as j
@@ -49,6 +50,9 @@ data = None
 money = 0
 points = 0
 is_verify = False
+nisit_code = ""
+fname = ""
+lname = ""
 
 
 # Tkinter GUI
@@ -117,7 +121,7 @@ pos_system = POSSystem()
 
 # Read UID button
 def readCard():
-    global money, points, uid, data
+    global money, points, uid, data, nisit_code, fname, lname
     data = load_json()
     
     uid = pos_system.read_uid()
@@ -128,6 +132,9 @@ def readCard():
         money = card_data["money"]
         points = card_data["points"]
         is_verify = card_data["isVerify"]
+        nisit_code = card_data["nisit_code"]
+        fname = card_data["fname"]
+        lname = card_data["lname"]
         if is_verify: 
             card_uid_var.set(uid)
             customer_display_var.set("Money: " + str(money))
@@ -141,9 +148,22 @@ def readCard():
 read_card_button = Button(f1, padx=50, pady=8, bd=8, fg="black", font=("TH Sarabun New", 20, "bold"), text="Read Card", bg="powder blue", command=readCard)
 read_card_button.grid(row=6, column=0, columnspan=2, padx=10, pady=10, sticky='w')
 
+fileName3 = "pos_logs.json"
+def update_pos_logs(uid, timestamp, message):
+    ftp_client.download_file(fileName3)
+    logs = j.load_data(fileName3)
+    if uid in logs:
+        logs[uid].append({"timestamp": timestamp, "message": message})
+    else:
+        logs[uid] = [{"timestamp": timestamp, "message": message}]
+    j.update_data(fileName3, logs)
+    ftp_client.upload_file(fileName3)
+    os.remove(fileName3)
+
+
 # process payment
 def processPayment():
-    global money, points, uid, data
+    global money, points, uid, data, nisit_code, fname, lname
     
     receipt_text.config(state='normal')
     receipt_text.delete('1.0', END)  # Clear previous content
@@ -154,13 +174,16 @@ def processPayment():
         customer_display_var.set("Money: " + str(money))  # Convert money to string for display
         points += pos_system.calculate_points(money_to_pay)
         customer_points_var.set("Points: " + str(points))
+        
         update_json_and_send_to_ftp(uid, data, money, points)
-        receipt = pos_system.generate_receipt(uid, money_to_pay, money, points)
+        timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        
+        receipt = pos_system.generate_receipt(uid, money_to_pay, nisit_code, fname, lname, timestamp)
+        update_pos_logs(uid, timestamp, "uid " + str(uid) + " nisit_code " + str(nisit_code) + " name " + fname + " " + lname + " have paid " + str(money_to_pay))
         receipt_text.insert(END, receipt)
     else:
         customer_display_var.set("Not enough money") 
     receipt_text.config(state='disabled') 
-
 
 
 payment_button_config = {
