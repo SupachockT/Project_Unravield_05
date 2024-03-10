@@ -1,14 +1,15 @@
 import sys
-
 import tkinter as tk
 from tkinter import messagebox
 import datetime
+from tkinter import Toplevel
 
 sys.path.append("..\\..\\Public\\")
 
 from NFC_Reader import NFC_Reader
 import FTP_JSON as fj
 from NewUserGUI import NewUser_GUI, center_window
+from RedemptionPoint import ShopUI
 
 uid = None
 data = None
@@ -41,6 +42,7 @@ def open_top_up():
         entry.pack(pady=(5, 10))
         return entry
 
+    data = fj.load_return_json()
     specific_uid_data = data.get(uid)
 
     if specific_uid_data:
@@ -93,12 +95,21 @@ def read_uid():
         if is_uid_verify:
             button2.config(state="normal")
             button3.config(state="disabled")
+            button4.config(state="normal")
         else:
             entry_var.set(uid + " is not verify")
     else:
         entry_var.set("uid is not found")
         button2.config(state="disabled")
         button3.config(state="normal")
+
+
+def open_redemption():
+    new_window = Toplevel(window)
+    new_window.title("Redemption Point")
+    new_window.lift()  # Lift the new Toplevel window to the top
+    data = fj.load_return_json()
+    shop_ui = ShopUI(new_window, uid, data)
 
 
 # Create the main window
@@ -125,5 +136,10 @@ button3 = tk.Button(
     state="disabled",  # Initially disabled
 )
 button3.pack(pady=5)
+
+button4 = tk.Button(
+    window, text="redemption point", command=open_redemption, state="disabled"
+)
+button4.pack(pady=5)
 
 window.mainloop()

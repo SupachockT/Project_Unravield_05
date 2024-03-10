@@ -41,3 +41,15 @@ def update_topup_logs(uid, timestamp, message):
     j.update_data(fileName2, logs)
     ftp_client.upload_file(fileName2)
     os.remove(fileName2)
+
+
+def update_redemption_logs(uid, timestamp, message):
+    ftp_client.download_file("redemption_logs.json")
+    logs = j.load_data("redemption_logs.json")
+    if uid in logs:
+        logs[uid].append({"timestamp": timestamp, "message": message})
+    else:
+        logs[uid] = [{"timestamp": timestamp, "message": message}]
+    j.update_data("redemption_logs.json", logs)
+    ftp_client.upload_file("redemption_logs.json")
+    os.remove("redemption_logs.json")
