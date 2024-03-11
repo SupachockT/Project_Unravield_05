@@ -83,7 +83,12 @@ def submit_data(money_input, window_to_close):
 
 def read_uid():
     global uid, data
-    reader = NFC_Reader()
+    reader = None
+    try:
+        reader = NFC_Reader()
+    except:
+        entry_var.set("No smart card reader!")
+
     uid = reader.read_uid()
     data = fj.load_return_json()
 
